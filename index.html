@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tablet de Diagnóstico Automotriz</title>
+    <title>Tablet Macías Systems</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@700&display=swap');
 
         * {
             margin: 0;
@@ -17,27 +17,81 @@
             user-select: none;
         }
 
+        /* El body en FiveM debe ser transparente para ver el juego al fondo */
         body {
-            background-color: #0d0f12;
-            min-height: 100vh;
+            background-color: rgba(0, 0, 0, 0);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 10px;
-        }
-
-        .tablet-container {
-            width: 100%;
-            max-width: 1100px;
-            height: 700px;
-            background-color: #14181f;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            border: 4px solid #232a36;
-            display: flex;
             overflow: hidden;
         }
 
+        /* ====== CARCASA FÍSICA DE LA TABLET (MACÍAS SYSTEMS) ====== */
+        .tablet-frame {
+            width: 1160px; /* Un poco más ancha para simular los marcos */
+            height: 760px;
+            background: linear-gradient(135deg, #1e222b 0%, #11141a 100%);
+            border-radius: 40px; /* Esquinas curvas de tablet real */
+            padding: 30px 25px 45px 25px; /* Espacio para marcos, cámara y marca */
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.1), 0 25px 60px rgba(0,0,0,0.9);
+            border: 5px solid #2d3545;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            /* Animación de entrada para cuando abras la tablet en el juego */
+            transform: translateY(100vh);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.125);
+        }
+
+        /* Clase que FiveM activará para mostrar la tablet con animación */
+        .tablet-frame.visible {
+            transform: translateY(0);
+        }
+
+        /* Detalle: Cámara Frontal de la tablet */
+        .tablet-camera {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #05070a;
+            border-radius: 50%;
+            border: 1px solid #3a4459;
+        }
+
+        /* Detalle: Grabado de Marca Láser en el plástico inferior */
+        .tablet-brand {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            color: #4f5d75;
+            letter-spacing: 3px;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.05);
+        }
+
+        /* ====== CONTENEDOR DE LA PANTALLA (LO QUE YA TENÍAMOS) ====== */
+        .tablet-screen {
+            width: 100%;
+            height: 100%;
+            background-color: #14181f;
+            border-radius: 20px; /* Pantalla interna curva */
+            border: 3px solid #090b0e; /* Bisel negro del cristal */
+            display: flex;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        /* BARRA LATERAL */
         .sidebar {
             width: 260px;
             background-color: #0b0d11;
@@ -57,7 +111,7 @@
         }
 
         .brand h2 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             letter-spacing: 1px;
         }
@@ -167,7 +221,6 @@
             font-weight: 600;
         }
 
-        /* CONTENEDOR DINÁMICO DE PESTAÑAS */
         .tab-content {
             display: flex;
             flex-direction: column;
@@ -178,7 +231,6 @@
             padding-right: 5px;
         }
 
-        /* DISEÑO DE TARJETAS */
         .card {
             background-color: #1c232e;
             border-radius: 16px;
@@ -244,7 +296,6 @@
             border-radius: 4px;
         }
 
-        /* SELECTORES PARA OPCIONES DE TUNING Y BOTONES INTERNOS */
         .tuning-options {
             display: flex;
             gap: 10px;
@@ -274,7 +325,6 @@
             color: white;
         }
 
-        /* COLORES DINÁMICOS */
         .card.critical { border-left-color: #ef4444; }
         .card.critical .status-text { color: #ef4444; }
         .card.critical .progress { background-color: #ef4444; }
@@ -338,67 +388,69 @@
 </head>
 <body>
 
-    <div class="tablet-container">
-        
-        <aside class="sidebar">
-            <div class="brand">
-                <span class="material-icons-round">analytics</span>
-                <h2>PERFORMANCE</h2>
-            </div>
+    <div class="tablet-frame" id="tablet-body">
+        <div class="tablet-camera"></div> <div class="tablet-screen">
             
-            <nav class="menu">
-                <button class="menu-btn active" onclick="switchTab('diagnostico', this)">
-                    <span class="material-icons-round">build_circle</span>
-                    Diagnóstico
-                </button>
-                <button class="menu-btn" onclick="switchTab('mantenimiento', this)">
-                    <span class="material-icons-round">oil_barrel</span>
-                    Mantenimiento
-                </button>
-                <button class="menu-btn" onclick="switchTab('personalizacion', this)">
-                    <span class="material-icons-round">palette</span>
-                    Personalización
-                </button>
-                <button class="menu-btn" onclick="switchTab('rendimiento', this)">
-                    <span class="material-icons-round">speed</span>
-                    Rendimiento
-                </button>
-            </nav>
-
-            <div class="mechanic-info">
-                <p class="role">Mecánico Activo</p>
-                <p class="name">El Ingeniero</p>
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <header class="vehicle-header">
-                <div>
-                    <h1 id="tab-title">Escáner de Sistema</h1>
-                    <p class="subheader" id="tab-subtitle">Vehículo detectado en bahía de servicio</p>
+            <aside class="sidebar">
+                <div class="brand">
+                    <span class="material-icons-round">analytics</span>
+                    <h2>MACÍAS SYSTEMS</h2>
                 </div>
-                <div class="vehicle-badge">
-                    <span class="plate">PLACA: 46XAN82</span>
-                    <span class="model">Sultan RS</span>
+                
+                <nav class="menu">
+                    <button class="menu-btn active" onclick="switchTab('diagnostico', this)">
+                        <span class="material-icons-round">build_circle</span>
+                        Diagnóstico
+                    </button>
+                    <button class="menu-btn" onclick="switchTab('mantenimiento', this)">
+                        <span class="material-icons-round">oil_barrel</span>
+                        Mantenimiento
+                    </button>
+                    <button class="menu-btn" onclick="switchTab('personalizacion', this)">
+                        <span class="material-icons-round">palette</span>
+                        Personalización
+                    </button>
+                    <button class="menu-btn" onclick="switchTab('rendimiento', this)">
+                        <span class="material-icons-round">speed</span>
+                        Rendimiento
+                    </button>
+                </nav>
+
+                <div class="mechanic-info">
+                    <p class="role">Mecánico Activo</p>
+                    <p class="name">El Ingeniero</p>
                 </div>
-            </header>
+            </aside>
 
-            <section class="tab-content" id="dynamic-content">
-                </section>
+            <main class="main-content">
+                <header class="vehicle-header">
+                    <div>
+                        <h1 id="tab-title">Escáner de Sistema</h1>
+                        <p class="subheader" id="tab-subtitle">Vehículo detectado en bahía de servicio</p>
+                    </div>
+                    <div class="vehicle-badge">
+                        <span class="plate">PLACA: 46XAN82</span>
+                        <span class="model">Sultan RS</span>
+                    </div>
+                </header>
 
-            <footer class="action-footer">
-                <button class="btn-secondary" onclick="alert('Escaneo cancelado de la tablet')">Cancelar Escaneo</button>
-                <button class="btn-primary" onclick="alert('¡Orden enviada! Pasa con el tendero de la tienda a recoger tus materiales genéricos.')">
-                    <span class="material-icons-round">shopping_cart</span>
-                    Generar Orden al Almacén
-                </button>
-            </footer>
-        </main>
+                <section class="tab-content" id="dynamic-content">
+                    </section>
 
-    </div>
+                <footer class="action-footer">
+                    <button class="btn-secondary" onclick="cerrarTabletJuego()">Cancelar Escaneo</button>
+                    <button class="btn-primary" onclick="alert('¡Orden enviada! Pasa con el tendero del almacén.')">
+                        <span class="material-icons-round">shopping_cart</span>
+                        Generar Orden al Almacén
+                    </button>
+                </footer>
+            </main>
+
+        </div>
+
+        <div class="tablet-brand">MACÍAS SYSTEMS • DIAGNOSTIC PRO</div> </div>
 
     <script>
-        // Objeto de datos que simula lo que después leeremos de FiveM
         const pantallas = {
             diagnostico: `
                 <div class="card critical">
@@ -491,23 +543,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card warning">
-                    <div class="card-icon"><span class="material-icons-round">speed</span></div>
-                    <div class="card-info">
-                        <h3>Mapeo de Motor (Reprogramación de ECU)</h3>
-                        <p class="status-text">Nivel actual del chip: Stock</p>
-                        <p class="hint">Requiere: 3x Kit de Motor para subir a Fase 3 (+30 HP)</p>
-                        <div class="tuning-options">
-                            <button class="select-btn selected" onclick="selectOpt(this)">Fase 1 (Stock)</button>
-                            <button class="select-btn" onclick="selectOpt(this)">Fase 2 (Sport)</button>
-                            <button class="select-btn" onclick="selectOpt(this)">Fase 3 (Racing)</button>
-                        </div>
-                    </div>
-                </div>
             `
         };
 
-        // Títulos dinámicos superiores
         const titulos = {
             diagnostico: { t: "Escáner de Sistema", s: "Vehículo detectado en bahía de servicio" },
             mantenimiento: { t: "Fluidos y Desgaste", s: "Control de mantenimiento preventivo por kilometraje" },
@@ -515,36 +553,50 @@
             rendimiento: { t: "Configuración de Performance", s: "Modificaciones mecánicas avanzadas y tracción" }
         };
 
-        // Función para cambiar de pestaña al dar clic
         function switchTab(tabName, element) {
-            // 1. Quitar la clase activa de todos los botones de navegación
             const buttons = document.querySelectorAll('.menu-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            
-            // 2. Ponerle la clase activa al botón que picamos
             element.classList.add('active');
-            
-            // 3. Cambiar los textos de la parte de arriba
             document.getElementById('tab-title').innerText = titulos[tabName].t;
             document.getElementById('tab-subtitle').innerText = titulos[tabName].s;
-            
-            // 4. Inyectar el HTML simulado de esa sección
             document.getElementById('dynamic-content').innerHTML = pantallas[tabName];
         }
 
-        // Función interactiva para prender/apagar opciones internas (los botones de tuning)
         function selectOpt(btn) {
-            // Buscar los botones hermanos dentro de la misma tarjeta y quitar selección
             const parent = btn.parentElement;
             const buttons = parent.querySelectorAll('.select-btn');
             buttons.forEach(b => b.classList.remove('selected'));
-            
-            // Seleccionar el botón al que se le dio clic
             btn.classList.add('selected');
         }
 
-        // Cargar por defecto la primera pantalla al iniciar
+        // ====== PUENTE DE ESCUCHA DE FIVEM (NUI) ======
+        window.addEventListener('message', function(event) {
+            let item = event.data;
+            let tablet = document.getElementById('tablet-body');
+            
+            if (item.action === "mostrarTablet") {
+                tablet.classList.add('visible'); // Activa la animación para subir la tablet
+            } else if (item.action === "ocultarTablet") {
+                tablet.classList.remove('visible'); // Baja la tablet de la pantalla
+            }
+        });
+
+        // Función para cerrar la tablet y avisarle a FiveM que regrese el control del juego
+        function cerrarTabletJuego() {
+            document.getElementById('tablet-body').classList.remove('visible');
+            fetch(`https://${GetParentResourceName()}/cerrarTabletNUI`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            });
+        }
+
+        // Carga inicial por defecto
         document.getElementById('dynamic-content').innerHTML = pantallas['diagnostico'];
+        
+        // ESTA LÍNEA ES SOLO PARA LA PRUEBA EN GITHUB PAGES (Se auto-abre para que la veas en el cel)
+        // En FiveM no estorba porque iniciará oculta hasta que uses el comando.
+        setTimeout(() => { document.getElementById('tablet-body').classList.add('visible'); }, 500);
     </script>
 </body>
 </html>
