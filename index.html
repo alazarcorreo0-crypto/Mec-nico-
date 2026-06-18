@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablet de Diagnóstico Automotriz</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="tablet-container">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="material-icons-round">analytics</span>
+                <h2>PERFORMANCE</h2>
+            </div>
+            
+            <nav class="menu">
+                <button class="menu-btn active">
+                    <span class="material-icons-round">build_circle</span>
+                    Diagnóstico
+                </button>
+                <button class="menu-btn">
+                    <span class="material-icons-round">oil_barrel</span>
+                    Mantenimiento
+                </button>
+                <button class="menu-btn">
+                    <span class="material-icons-round">palette</span>
+                    Personalización
+                </button>
+                <button class="menu-btn">
+                    <span class="material-icons-round">speed</span>
+                    Rendimiento
+                </button>
+            </nav>
+
+            <div class="mechanic-info">
+                <p class="role">Mecánico Activo</p>
+                <p class="name">El Ingeniero</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="vehicle-header">
+                <div>
+                    <h1>Escáner de Sistema</h1>
+                    <p class="subheader">Vehículo detectado en bahía de servicio</p>
+                </div>
+                <div class="vehicle-badge">
+                    <span class="plate">PLACA: 46XAN82</span>
+                    <span class="model">Sultan RS</span>
+                </div>
+            </header>
+
+            <section class="dashboard-grid">
+                
+                <div class="card critical">
+                    <div class="card-icon">
+                        <span class="material-icons-round">propulsion_line</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Módulo de Motor</h3>
+                        <p class="status-text">Estado Crítico (35%)</p>
+                        <div class="progress-bar"><div class="progress" style="width: 35%;"></div></div>
+                        <p class="hint">Requires: 1x Kit de Motor</p>
+                    </div>
+                </div>
+
+                <div class="card warning">
+                    <div class="card-icon">
+                        <span class="material-icons-round">tire_repair</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Sistema de Frenos</h3>
+                        <p class="status-text">Desgaste Medio (60%)</p>
+                        <div class="progress-bar"><div class="progress" style="width: 60%;"></div></div>
+                        <p class="hint">Requires: 1x Kit de Frenos</p>
+                    </div>
+                </div>
+
+                <div class="card healthy">
+                    <div class="card-icon">
+                        <span class="material-icons-round">settings_input_component</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Caja de Cambios</h3>
+                        <p class="status-text">Óptimo (98%)</p>
+                        <div class="progress-bar"><div class="progress" style="width: 98%;"></div></div>
+                        <p class="hint">Configuración actual: AWD</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <footer class="action-footer">
+                <button class="btn-secondary">Cancelar Escaneo</button>
+                <button class="btn-primary">
+                    <span class="material-icons-round">shopping_cart</span>
+                    Generar Orden al Almacén
+                </button>
+            </footer>
+        </main>
+
+    </div>
+
+</body>
+</html>
